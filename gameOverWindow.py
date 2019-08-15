@@ -5,15 +5,19 @@ import sys
 
 class GameOverWindow(QDialog):
 
-    def __init__(self, width, height, parent=None):
+    def __init__(self, width, height, parent, winner):
         super(QDialog, GameOverWindow).__init__(self, parent)
         self.setFixedSize(width, height)
         """Game over label"""
-        gameOverLabel = QLabel("Game Over!", self)
-        lwidth = width
-        lheight = height
-        gameOverLabel.setFixedSize(lwidth, lheight)
-        gameOverLabel.move(int((width - lwidth)/2) + 40, int((height - lheight) / 2))
+        if winner > 0:
+            gameOverLabel = QLabel("玩家%d获胜!" % winner, self)
+            gameOverLabel.setFixedSize(width, height)
+            gameOverLabel.move(70, 0)
+        else:
+            gameOverLabel = QLabel("平局!", self)
+            gameOverLabel.setFixedSize(width, height)
+            gameOverLabel.move(150, 0)
+
         font = QFont()
         font.setFamily('微软雅黑')
         font.setBold(True)      # 设置加粗类型
@@ -37,7 +41,7 @@ class Demo(QWidget):
         self.show()
 
     def winCreate(self):
-        wind = GameOverWindow(400, 200, self)
+        wind = GameOverWindow(400, 200, self, 0)
 
 
 if __name__ == '__main__':

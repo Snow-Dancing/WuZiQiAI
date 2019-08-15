@@ -78,7 +78,7 @@ class MainWindow(QMainWindow):
     def gameOverEvent(self):
         print(111)
         self.infoGUI.stopGameTimer()
-        gameOverDialog = GameOverWindow(400, 200, self.mainWidget)
+        GameOverWindow(400, 200, self.mainWidget, self.chessBoardGui.winner)
         self.newGameEvent()
 
 

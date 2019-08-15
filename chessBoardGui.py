@@ -8,6 +8,7 @@ from gameLogit import GameLogit
 
 class ChessBoardGui(QWidget):
     gameOver = pyqtSignal()
+
     def __init__(self, parent):
         super(QWidget, ChessBoardGui).__init__(self, parent)
         self.lineWidth = 3
@@ -21,6 +22,7 @@ class ChessBoardGui(QWidget):
         # self.chessArray = np.zeros([15, 15], dtype=int)
         self.gameLogit = GameLogit()
         self.gamaRunning = False
+        self.winner = 0
         self.initUI()
 
     def initUI(self):
@@ -67,8 +69,7 @@ class ChessBoardGui(QWidget):
             self.gameLogit.lastPlayer = -1 if self.gameLogit.lastPlayer == 1 else 1
             self.gameLogit.putAChess(self.gameLogit.lastPlayer, integerX, integerY)
             self.update()
-            if self.gameLogit.gameOver():
-                self.gameOverEvent()
+            self.gameOverCheck(self.gameLogit.gameOver())
 
     def paintEvent(self, e):
         qp = QPainter()
@@ -123,8 +124,11 @@ class ChessBoardGui(QWidget):
         qp.setPen(pen)
         qp.drawEllipse(posX - self.chessRadius, posY - self.chessRadius, 2 * self.chessRadius, 2 * self.chessRadius)
 
-    def gameOverEvent(self):
-        self.gameOver.emit()
+    def gameOverCheck(self, winner):
+        if winner:
+            self.gameOver.emit()
+            self.winner = winner
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
