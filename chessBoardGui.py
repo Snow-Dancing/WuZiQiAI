@@ -126,8 +126,8 @@ class ChessBoardGui(QWidget):
 
     def gameOverCheck(self, winner):
         if winner:
-            self.gameOver.emit()
             self.winner = winner
+            self.gameOver.emit()
 
 
 if __name__ == '__main__':
